@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 
+// 렌더링: 화면에 표시한다
 const DiaryEditor = () => {
   // useRef(): html DOM 요소로 접근할 수 있는 기능 가짐
   const authorInput = useRef();
