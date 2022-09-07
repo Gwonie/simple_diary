@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 // 렌더링: 화면에 표시한다
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
   // useRef(): html DOM 요소로 접근할 수 있는 기능 가짐
   const authorInput = useRef();
   const contentInput = useRef();
@@ -29,7 +29,13 @@ const DiaryEditor = () => {
       contentInput.current.focus();
       return;
     }
+    onCreate(state.author, state.content, state.emotion);
     alert("저장 성공");
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
   };
 
   return (
