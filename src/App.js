@@ -1,49 +1,36 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 // es 모듈 시스템으로 불러와주기
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 
-// const dummyList = [
-//   {
-//     id: 1,
-//     author: "아무개1",
-//     content: "하이 1",
-//     emotion: 5,
-//     created_date: new Date().getTime(),
-//   },
-//   {
-//     id: 2,
-//     author: "아무개2",
-//     content: "하이 2",
-//     emotion: 4,
-//     created_date: new Date().getTime(),
-//   },
-//   {
-//     id: 3,
-//     author: "아무개3",
-//     content: "하이 3",
-//     emotion: 5,
-//     created_date: new Date().getTime(),
-//   },
-//   {
-//     id: 4,
-//     author: "아무개4",
-//     content: "하이 4",
-//     emotion: 3,
-//     created_date: new Date().getTime(),
-//   },
-//   {
-//     id: 5,
-//     author: "아무개5",
-//     content: "하이 5",
-//     emotion: 2,
-//     created_date: new Date().getTime(),
-//   },
-// ];
+// https://jsonplaceholder.typicode.com/comments
 
 function App() {
   const [data, setData] = useState([]);
+
+  // async를 붙여 Promise객체를 반환하는 비동기함수로 만듦
+  const getData = async () => {
+    const res = await fetch(
+      `https://jsonplaceholder.typicode.com/comments`
+    ).then((res) => res.json());
+
+    const initData = res.slice(0, 20).map((it) => {
+      return {
+        author: it.email,
+        content: it.body,
+        emotion: Math.floor(Math.random() * 5) + 1,
+        created_date: new Date().getTime(),
+        id: dataId.current++,
+      };
+    });
+
+    setData(initData);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const dataId = useRef(0);
 
